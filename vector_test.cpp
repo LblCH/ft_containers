@@ -96,13 +96,13 @@ void test_vector()
 
 	std::cout << "\33[1;31m" << "Access [2], at[1] [12], front, back" << "\33[0m" << std::endl;
 	std::cout << stl_vector6[2] << " " << stl_vector6.at(1) << " ";
-	try {stl_vector6.at(12);}
+	try {std::cout << stl_vector6.at(12);}
 	catch(const std::exception& e) {
 		std::cout << e.what() << ' ';
 	}
 	std::cout << stl_vector6.front() << " " << stl_vector6.back() << std::endl;
 	std::cout << ft_vector6[2] << ' ' << ft_vector6.at(1) << " ";
-	try {ft_vector6.at(12);}
+	try {std::cout << ft_vector6.at(12);}
 	catch(const std::exception& e) {
 		std::cout << e.what() << ' ';
 	}
