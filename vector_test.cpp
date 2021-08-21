@@ -116,10 +116,3 @@ void test_vector()
 	std::cout << std::endl;
 
 }
-
-
-int main()
-{
-	test_vector();
-	return 0;
-}

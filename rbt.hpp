@@ -20,11 +20,11 @@ namespace ft {
 	template<class Key, class Value>
 	class pair {
 	public:
-		typedef Key first_type;
-		typedef Value second_type;
-		first_type first;
-		second_type second;
-	public:
+		typedef Key		first_type;
+		typedef Value	second_type;
+		first_type 		first;
+		second_type 	second;
+
 		pair() : first(first_type()), second(second_type()) {}
 
 		template<class U, class V>
@@ -74,6 +74,7 @@ namespace ft {
 		return ft::pair<T1, T2>(x, y);
 	}
 
+
 	template<class T>
 	struct less : std::binary_function<T, T, bool> {
 		typedef T first_argument_type;
@@ -99,7 +100,7 @@ namespace ft {
 	template<class Key, class T, class Alloc = std::allocator<ft::pair<Key, T> > >
 	class node_rbt {
 	public:
-		ft::pair<const Key, T>*    	pair;
+		ft::pair<Key, T>    		pair;
 		node_rbt*                   parent;
 		node_rbt*			        left;
 		node_rbt*		        	right;
@@ -107,7 +108,7 @@ namespace ft {
 		bool		        		color;
 
 		node_rbt() : parent(NULL), left(NULL), right(NULL), end(NULL), color(RED) {}
-		node_rbt(ft::pair<Key, T>& p_pair) : pair(p_pair), parent(NULL), left(NULL), right(NULL), end(NULL), color(RED_COLOR) {}
+		node_rbt(ft::pair<Key, T>& p_pair) : pair(p_pair), parent(NULL), left(NULL), right(NULL), end(NULL), color(RED) {}
 		node_rbt& operator=(const node_rbt& node)
 		{
 			this->pair = node.pair;
@@ -355,9 +356,9 @@ namespace ft {
 					if (replace->left)
 						replace->left->parent = replace->parent;
 				}
-				if (replace->color == BLACK_COLOR) {
-					if (replace->left && replace->left->color == RED_COLOR)
-						replace->left->color = BLACK_COLOR;
+				if (replace->color == BLACK) {
+					if (replace->left && replace->left->color == RED)
+						replace->left->color = BLACK;
 					erase_balance(root, replace->parent);
 				}
 			}
@@ -378,9 +379,9 @@ namespace ft {
 					if (replace->right)
 						replace->right->parent = replace->parent;
 				}
-				if (replace->color == BLACK_COLOR) {
-					if (replace->right && replace->right->color == RED_COLOR)
-						replace->right->color = BLACK_COLOR;
+				if (replace->color == BLACK) {
+					if (replace->right && replace->right->color == RED)
+						replace->right->color = BLACK;
 					erase_balance(root, replace->parent);
 				}
 			}
@@ -394,9 +395,9 @@ namespace ft {
 					replace->parent->right = NULL;
 				else
 					replace->parent->left = NULL;
-				if (replace->color == BLACK_COLOR) {
-					if (replace->right && replace->right->color == RED_COLOR)
-						replace->right->color = BLACK_COLOR;
+				if (replace->color == BLACK) {
+					if (replace->right && replace->right->color == RED)
+						replace->right->color = BLACK;
 					erase_balance(root, replace->parent);
 				}
 			}
@@ -412,36 +413,36 @@ namespace ft {
 				if (child) {
 					right = child->right;
 					left = child->left;
-					if ((right || left) && (!right || right->color == BLACK_COLOR) &&
-						(!left || left->color == BLACK_COLOR)) {
-						if (child->color == BLACK_COLOR) {
-							child->color = RED_COLOR;
-							n->color = BLACK_COLOR;
+					if ((right || left) && (!right || right->color == BLACK) &&
+						(!left || left->color == BLACK)) {
+						if (child->color == BLACK) {
+							child->color = RED;
+							n->color = BLACK;
 						}
-						if (child->color == RED_COLOR)
+						if (child->color == RED)
 							rotate_left(n, root);
 						else
 							n = n->parent;
-					} else if (right && child->color == BLACK_COLOR) {
-						if (left && left->color == RED_COLOR && right->color == BLACK_COLOR) {
+					} else if (right && child->color == BLACK) {
+						if (left && left->color == RED && right->color == BLACK) {
 							rotate_right(child, root);
 							right = child;
 							child = left;
 						}
-						if (right->color == RED_COLOR && (!left || left->color == BLACK_COLOR || !n->left))
+						if (right->color == RED && (!left || left->color == BLACK || !n->left))
 							rotate_left(n, root);
 						else
 							n = n->parent;
-					} else if (child->color == BLACK_COLOR && n->color == RED_COLOR) {
-						n->color = BLACK_COLOR;
-						child->color = RED_COLOR;
+					} else if (child->color == BLACK && n->color == RED) {
+						n->color = BLACK;
+						child->color = RED;
 						n = n->parent;
 					} else
 						n = n->parent;
 				} else
 					n = n->parent;
 				if (*root)
-					(*root)->color = BLACK_COLOR;
+					(*root)->color = BLACK;
 			}
 		}
 
@@ -455,11 +456,9 @@ namespace ft {
 		void insert_balance(node **root, node *n) {
 			node *parent;
 			node *grand;
-			node *tmp;
 			while (n) {
 				parent = n->parent;
 				grand = NULL;
-				tmp = parent;
 				if (parent) {
 					grand = parent->parent;
 					if (n->color == RED) {
@@ -540,8 +539,8 @@ namespace ft {
 					n->left->parent = n;
 			}
 			left->right = n;
-			n->color = RED_COLOR;
-			left->color = BLACK_COLOR;
+			n->color = RED;
+			left->color = BLACK;
 			if (!left->parent)
 				*root = left;
 		}

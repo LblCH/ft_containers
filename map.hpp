@@ -9,7 +9,7 @@ namespace ft {
     template <class Key, class T, class Compare = ft::less<Key>, class Alloc = std::allocator<ft::pair<const Key, T> > >
     class map {
 	private:
-		typedef node_rbt<Key, T>*     					                       		node;
+		typedef node_rbt<Key, T>     					                       		node;
 		typedef rbt<Key, T> 														rbt;
 		typedef ft::pair<Key, T> 													pair;
 
@@ -40,8 +40,8 @@ namespace ft {
     	typedef size_t   															size_type;
 
 		explicit map (const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type()) : _k_comp(comp),
-				_alloc(alloc), _root(NULL), _end(NULL), _size(0) {
+				const allocator_type& alloc = allocator_type()) :
+				_root(NULL), _end(NULL), _alloc(alloc), _k_comp(comp), _size(0){
 			this->_end = this->_tree.create_node(ft::make_pair(key_type(), mapped_type()), NULL);
 		}
 
@@ -150,6 +150,7 @@ namespace ft {
 
 		iterator insert (iterator position, const value_type& val) {
 			bool	ret = this->_tree.insert(&this->_root, this->_tree.create_node(val, this->_end));
+			position++;
 			if (ret)
 				++this->_size;
 			node*	n = this->_tree.find_node(&this->_root, val.first);
